@@ -1,0 +1,4 @@
+# Place your promotional video here
+# Name it: promotional-video.mp4
+# Then uncomment the local source in VideoPopup.tsx
+
