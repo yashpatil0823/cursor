@@ -1,9 +1,10 @@
 import Header from "../components/Header";
 import Navigation from "../components/Navigation";
+import Footer from "../components/Footer";
 
 export default function FAQ() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-white">
       <Header />
       <Navigation />
 
@@ -70,14 +71,7 @@ export default function FAQ() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-[#1a237e] text-white py-8 md:py-12 mt-10 md:mt-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-xs md:text-sm text-gray-400">
-            <p>© 2024 Export Trade Mart. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }

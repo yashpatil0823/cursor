@@ -1,132 +1,625 @@
+'use client';
+
 import Link from "next/link";
 import Image from "next/image";
 import Header from "./components/Header";
 import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
+import { useState, useEffect } from "react";
 
 export default function Home() {
+  // Auto-playing slides
+  const slides = [
+    {
+      title: "Global Trade Solutions",
+      subtitle: "Connecting Businesses Worldwide Through Excellence in Export & Import",
+      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1920&q=80"
+    },
+    {
+      title: "Verified Global Buyers",
+      subtitle: "Access thousands of verified buyers from around the world",
+      image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=1920&q=80"
+    },
+    {
+      title: "Trusted Trade Partner",
+      subtitle: "Your reliable partner for international business success",
+      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=80"
+    }
+  ];
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000); // Change slide every 5 seconds
+
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
+  // Buyers data cards
+  const buyers = [
+    {
+      id: 1,
+      verified: true,
+      date: "Nov-04-25",
+      country: "Singapore",
+      countryCode: "SG",
+      title: "Wanted : Scrap Like Copper Scrap",
+      buyerFrom: "Singapore, Singapore, Singapore",
+      quantity: "200 - 500 Metric Tons",
+      destination: "India",
+      paymentTerms: "L/C Or T/T",
+      supplierOrigin: "Worldwide",
+      description: "Please provide a quotation to the following requirement from importer",
+      category: "Metal Scraps",
+      subCategory: "Copper Scrap"
+    },
+    {
+      id: 2,
+      verified: true,
+      date: "Nov-03-25",
+      country: "USA",
+      countryCode: "US",
+      title: "Wanted : Premium Cotton Fabric",
+      buyerFrom: "New York, USA",
+      quantity: "1000 - 2000 Yards",
+      destination: "Bangladesh",
+      paymentTerms: "T/T Advance",
+      supplierOrigin: "Asia",
+      description: "Looking for high-quality cotton fabric for manufacturing",
+      category: "Textiles",
+      subCategory: "Cotton Fabric"
+    },
+    {
+      id: 3,
+      verified: true,
+      date: "Nov-02-25",
+      country: "Germany",
+      countryCode: "DE",
+      title: "Wanted : Industrial Machinery Parts",
+      buyerFrom: "Berlin, Germany",
+      quantity: "50 - 100 Units",
+      destination: "Germany",
+      paymentTerms: "L/C at Sight",
+      supplierOrigin: "Worldwide",
+      description: "Require industrial machinery parts for manufacturing unit",
+      category: "Machinery",
+      subCategory: "Industrial Parts"
+    },
+    {
+      id: 4,
+      verified: true,
+      date: "Nov-01-25",
+      country: "Japan",
+      countryCode: "JP",
+      title: "Wanted : Organic Green Tea",
+      buyerFrom: "Tokyo, Japan",
+      quantity: "500 - 1000 Kg",
+      destination: "Japan",
+      paymentTerms: "L/C 30 Days",
+      supplierOrigin: "India, China, Sri Lanka",
+      description: "Seeking premium quality organic green tea",
+      category: "Food & Beverages",
+      subCategory: "Tea"
+    },
+    {
+      id: 5,
+      verified: true,
+      date: "Oct-31-25",
+      country: "UAE",
+      countryCode: "AE",
+      title: "Wanted : Crude Oil",
+      buyerFrom: "Dubai, UAE",
+      quantity: "10000 - 20000 Barrels",
+      destination: "UAE",
+      paymentTerms: "T/T or L/C",
+      supplierOrigin: "Middle East, Africa",
+      description: "Regular requirement for crude oil supply",
+      category: "Oil & Gas",
+      subCategory: "Crude Oil"
+    },
+    {
+      id: 6,
+      verified: true,
+      date: "Oct-30-25",
+      country: "UK",
+      countryCode: "GB",
+      title: "Wanted : Handmade Carpets",
+      buyerFrom: "London, UK",
+      quantity: "200 - 500 Pieces",
+      destination: "UK",
+      paymentTerms: "T/T 50% Advance",
+      supplierOrigin: "India, Pakistan, Iran",
+      description: "Premium handmade carpets for retail business",
+      category: "Home Decor",
+      subCategory: "Carpets"
+    },
+    {
+      id: 7,
+      verified: true,
+      date: "Oct-29-25",
+      country: "Australia",
+      countryCode: "AU",
+      title: "Wanted : Fresh Fruits",
+      buyerFrom: "Sydney, Australia",
+      quantity: "5000 - 10000 Kg",
+      destination: "Australia",
+      paymentTerms: "T/T Net 30",
+      supplierOrigin: "Asia, South America",
+      description: "Regular import of fresh seasonal fruits",
+      category: "Agriculture",
+      subCategory: "Fruits"
+    },
+    {
+      id: 8,
+      verified: true,
+      date: "Oct-28-25",
+      country: "Canada",
+      countryCode: "CA",
+      title: "Wanted : Timber & Wood Products",
+      buyerFrom: "Toronto, Canada",
+      quantity: "1000 - 2000 Cubic Meters",
+      destination: "Canada",
+      paymentTerms: "L/C or T/T",
+      supplierOrigin: "North America, Europe",
+      description: "Sustainable timber and wood products required",
+      category: "Forestry",
+      subCategory: "Timber"
+    }
+  ];
+
+  const [visibleCards, setVisibleCards] = useState(3);
+  const cardsPerLoad = 3;
+
+  const handleSeeMore = () => {
+    setVisibleCards((prev) => Math.min(prev + cardsPerLoad, buyers.length));
+  };
+
   return (
     <main className="min-h-screen">
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.5s ease-in-out;
+        }
+      `}</style>
       <Header />
       <Navigation />
 
-      {/* Hero Section with Port Background */}
-      <section className="relative h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] w-full overflow-hidden">
-        {/* Background with gradient sky and port scene */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1a237e] via-[#283593] to-[#000051]">
-          {/* Stars/Twinkling effect */}
-          <div className="absolute inset-0 opacity-30">
-            {[10, 25, 45, 60, 75, 85, 15, 35, 55, 70, 20, 40, 65, 80, 30, 50, 90, 12, 38, 72].map((left, i) => (
-              <div
-                key={i}
-                className="absolute w-1 h-1 bg-white rounded-full animate-pulse"
-                style={{
-                  left: `${left}%`,
-                  top: `${(i * 7) % 50}%`,
-                  animationDelay: `${(i * 0.3) % 2}s`,
-                  animationDuration: `${1 + (i % 3) * 0.3}s`
-                }}
-              />
-            ))}
+      {/* Auto-playing Slides Section */}
+      <section className="relative h-[500px] sm:h-[600px] md:h-[700px] w-full overflow-hidden">
+        {slides.map((slide, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              index === currentSlide ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${slide.image})` }}>
+              <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70"></div>
+            </div>
+            <div className="relative z-10 h-full flex items-center justify-center">
+              <div className="text-center text-white px-4 max-w-4xl">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 drop-shadow-2xl">
+                  {slide.title}
+                </h1>
+                <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 md:mb-8 text-gray-200 drop-shadow-lg">
+                  {slide.subtitle}
+                </p>
+                <div className="flex gap-3 md:gap-4 justify-center flex-wrap">
+                  <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 md:px-8 py-2 md:py-3 rounded-lg text-sm md:text-base transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
+                    Explore Services
+                  </button>
+                  <button className="bg-transparent border-2 border-white hover:bg-white/10 text-white font-bold px-6 md:px-8 py-2 md:py-3 rounded-lg text-sm md:text-base transition-all">
+                    Learn More
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+        
+        {/* Slide Indicators */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 flex gap-2">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-3 h-3 rounded-full transition-all ${
+                index === currentSlide ? 'bg-white w-8' : 'bg-white/50 hover:bg-white/75'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+
+        {/* Navigation Arrows */}
+        <button
+          onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-all"
+          aria-label="Previous slide"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button
+          onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-all"
+          aria-label="Next slide"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </section>
+
+
+
+
+      {/* Find Verified Global Buyers Data Section */}
+      <section className="py-12 sm:py-16 md:py-20 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1a237e] mb-2">
+              Find Verified Global Buyers Data
+            </h2>
+            <div className="w-20 h-1 bg-[#00bcd4] mx-auto"></div>
           </div>
 
-          {/* Port Cranes Silhouette */}
-          <div className="absolute bottom-0 left-0 right-0 h-[400px] flex items-end justify-around px-4 md:px-16">
-            {[...Array(6)].map((_, i) => (
-              <div 
-                key={i} 
-                className="relative flex items-end justify-center"
-                style={{ width: `${100 / 6}%` }}
+          {/* Mobile: Vertical cards (2-3 cards) */}
+          <div className="md:hidden grid grid-cols-1 gap-4 mb-6">
+            {buyers.slice(0, visibleCards).map((buyer) => (
+              <div
+                key={buyer.id}
+                className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all border border-gray-200 overflow-hidden flex-shrink-0 h-full"
               >
-                {/* Water reflection */}
-                <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-black/30 to-transparent blur-sm"></div>
-                
-                {/* Crane structure */}
-                <div className="relative">
-                  {/* Main mast */}
-                  <div className="w-3 md:w-4 h-48 md:h-64 bg-gray-900 rounded-t-lg mx-auto shadow-2xl"></div>
-                  
-                  {/* Cross beam */}
-                  <div 
-                    className="absolute w-20 md:w-32 h-2 bg-gray-900 rounded shadow-xl"
-                    style={{ 
-                      bottom: '180px',
-                      left: '50%',
-                      transform: `translateX(-50%) rotate(${-10 + (i % 3) * 10}deg)`,
-                      transformOrigin: 'left center'
-                    }}
-                  ></div>
-                  
-                  {/* Counterweight */}
-                  <div className="absolute w-6 h-8 bg-gray-800 rounded bottom-[200px] left-1/2 -translate-x-1/2 shadow-lg"></div>
-                  
-                  {/* Crane lights */}
-                  <div 
-                    className="absolute w-2 h-2 bg-yellow-300 rounded-full shadow-lg animate-pulse"
-                    style={{ 
-                      bottom: '170px',
-                      left: '50%',
-                      transform: `translateX(-${30 + (i % 2) * 40}px)`,
-                      boxShadow: '0 0 10px rgba(255, 255, 0, 0.8)'
-                    }}
-                  ></div>
-                  <div 
-                    className="absolute w-2 h-2 bg-yellow-300 rounded-full shadow-lg animate-pulse"
-                    style={{ 
-                      bottom: '170px',
-                      left: '50%',
-                      transform: `translateX(${30 + (i % 2) * 40}px)`,
-                      boxShadow: '0 0 10px rgba(255, 255, 0, 0.8)',
-                      animationDelay: '0.5s'
-                    }}
-                  ></div>
+                {/* Card Header */}
+                <div className="p-4 pb-3 bg-gray-50 border-b border-gray-200">
+                  <div className="flex items-center">
+                    {buyer.verified && (
+                      <div className="flex items-center gap-1">
+                        <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-xs font-semibold text-green-600">VERIFIED</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Card Body */}
+                <div className="p-4 flex-1 flex flex-col">
+                  <div className="flex items-start gap-2 mb-3">
+                    <div className="text-2xl">🏳️</div>
+                    <h3 className="text-base font-bold text-blue-700 leading-tight flex-1">
+                      {buyer.title}
+                    </h3>
+                  </div>
+
+                  <p className="text-sm font-semibold text-gray-800 mb-3">
+                    Buyer From {buyer.buyerFrom}
+                  </p>
+
+                  <div className="space-y-2 mb-4 flex-1">
+                    <div className="flex items-center gap-2 text-sm text-gray-700">
+                      <svg className="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                      <span><strong>Quantity:</strong> {buyer.quantity}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-gray-700">
+                      <svg className="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span><strong>Destination:</strong> {buyer.destination}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-gray-700">
+                      <svg className="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span><strong>Payment:</strong> {buyer.paymentTerms}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded">Buyer Of {buyer.category}</span>
+                    <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded">{buyer.subCategory}</span>
+                  </div>
+
+                  <Link href="/contact" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-center">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <span>Inquire Now</span>
+                  </Link>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Horizon line */}
-          <div className="absolute bottom-[200px] left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+          {/* Desktop: Horizontal cards - 3 cards per row */}
+          <div className="hidden md:block pb-4 mb-6">
+            <div className="grid grid-cols-3 gap-6">
+              {buyers.slice(0, visibleCards).map((buyer, index) => (
+                <div
+                  key={buyer.id}
+                  className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden w-full h-[580px] flex flex-col animate-fadeIn"
+                >
+                  {/* Card Header */}
+                  <div className="p-4 pb-3 bg-gray-50 border-b border-gray-200">
+                    <div className="flex items-center">
+                      {buyer.verified && (
+                        <div className="flex items-center gap-1">
+                          <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          <span className="text-xs font-semibold text-green-600">VERIFIED</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
 
-          {/* Water/Port area */}
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-gray-900/80 via-gray-800/40 to-transparent">
-            {/* Water ripples */}
-            <svg className="absolute bottom-0 w-full h-32" viewBox="0 0 1440 120" preserveAspectRatio="none">
-              <path d="M0,60 Q360,40 720,60 T1440,60 L1440,120 L0,120 Z" fill="rgba(0,0,0,0.3)" opacity="0.5"/>
-              <path d="M0,80 Q360,70 720,80 T1440,80 L1440,120 L0,120 Z" fill="rgba(0,0,0,0.2)" opacity="0.3"/>
-            </svg>
-          </div>
+                  {/* Card Body */}
+                  <div className="p-4 flex-1 flex flex-col">
+                    <div className="flex items-start gap-2 mb-3">
+                      <div className="text-2xl">🏳️</div>
+                      <h3 className="text-base font-bold text-blue-700 leading-tight flex-1">
+                        {buyer.title}
+                      </h3>
+                    </div>
 
-          {/* Atmospheric overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-        </div>
+                    <p className="text-sm font-semibold text-gray-800 mb-3">
+                      Buyer From {buyer.buyerFrom}
+                    </p>
 
-        {/* Content Overlay */}
-        <div className="relative z-10 h-full flex justify-center">
-          <div className="text-center text-white px-4 max-w-4xl pt-16 sm:pt-20 md:pt-24">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 md:mb-6 drop-shadow-2xl">
-              Global Trade Solutions
-            </h1>
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 md:mb-8 text-gray-200 drop-shadow-lg px-2">
-              Connecting Businesses Worldwide Through Excellence in Export & Import
-            </p>
-            <div className="flex gap-3 md:gap-4 justify-center flex-wrap">
-              <button className="bg-[#00bcd4] hover:bg-[#00acc1] text-white font-bold uppercase px-4 md:px-6 lg:px-8 py-2 md:py-3 lg:py-4 rounded-lg text-sm md:text-base transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
-                Explore Services
-              </button>
-              <button className="bg-transparent border-2 border-white hover:bg-white/10 text-white font-bold uppercase px-4 md:px-6 lg:px-8 py-2 md:py-3 lg:py-4 rounded-lg text-sm md:text-base transition-all">
-                Learn More
-              </button>
+                    <div className="space-y-2 mb-4 flex-1">
+                      <div className="flex items-center gap-2 text-sm text-gray-700">
+                        <svg className="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        <span><strong>Quantity Required:</strong> {buyer.quantity}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-gray-700">
+                        <svg className="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span><strong>Destination:</strong> {buyer.destination}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-gray-700">
+                        <svg className="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span><strong>Payment Terms:</strong> {buyer.paymentTerms}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-gray-700">
+                        <svg className="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span><strong>Looking for suppliers from:</strong> {buyer.supplierOrigin}</span>
+                      </div>
+                    </div>
+
+                    <div className="mb-4">
+                      <h4 className="text-sm font-semibold text-gray-800 mb-1">Product Description</h4>
+                      <p className="text-xs text-gray-600">{buyer.description}</p>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded">Buyer Of {buyer.category}</span>
+                      <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded">{buyer.subCategory}</span>
+                    </div>
+
+                    <Link href="/contact" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      <span>Inquire Now</span>
+                    </Link>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
 
-        {/* Decorative waves at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 w-full overflow-hidden">
-          <svg className="w-full h-32" viewBox="0 0 1440 120" fill="none"
-               xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-            <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" 
-                  fill="white"></path>
-          </svg>
+          {/* See More Button */}
+          {visibleCards < buyers.length && (
+            <div className="text-center mt-8">
+              <button
+                onClick={handleSeeMore}
+                className="bg-[#00bcd4] hover:bg-[#00acc1] text-white font-semibold px-8 py-3 rounded-lg transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
+                See More
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
+
+  {/* Product Categories Section */}
+  <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-gray-50 to-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 md:mb-12 lg:mb-16">
+            <h2 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6">
+              Discover Premium <span className="text-blue-600">Products for Global Buyers</span>
+            </h2>
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto px-2">
+              Explore our extensive range of high-quality export products from verified suppliers worldwide
+            </p>
+            <div className="w-24 h-1 bg-blue-600 mx-auto mt-4"></div>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
+            {/* Fruits and Vegetables */}
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="relative h-48 sm:h-56 md:h-64">
+                <Image
+                  src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=800&q=80"
+                  alt="Fruits and Vegetables"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <h3 className="text-white font-bold text-sm md:text-base lg:text-lg">Fruits & Vegetables</h3>
+                </div>
+              </div>
+            </div>
+
+            {/* Readymade Garments */}
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="relative h-48 sm:h-56 md:h-64">
+                <Image
+                  src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=800&q=80"
+                  alt="Readymade Garments"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <h3 className="text-white font-bold text-sm md:text-base lg:text-lg">Readymade Garments</h3>
+                </div>
+              </div>
+            </div>
+
+            {/* Gems and Jewellery */}
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="relative h-48 sm:h-56 md:h-64">
+                <Image
+                  src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80"
+                  alt="Gems and Jewellery"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <h3 className="text-white font-bold text-sm md:text-base lg:text-lg">Gems & Jewellery</h3>
+                </div>
+              </div>
+            </div>
+
+            {/* Chemical Products */}
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="relative h-48 sm:h-56 md:h-64">
+                <Image
+                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80"
+                  alt="Chemical Products"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <h3 className="text-white font-bold text-sm md:text-base lg:text-lg">Chemical Products</h3>
+                </div>
+              </div>
+            </div>
+
+            {/* Pharmaceutical Products */}
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="relative h-48 sm:h-56 md:h-64">
+                <Image
+                  src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=800&q=80"
+                  alt="Pharmaceutical Products"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <h3 className="text-white font-bold text-sm md:text-base lg:text-lg">Pharmaceutical Products</h3>
+                </div>
+              </div>
+            </div>
+
+            {/* Organic Products */}
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="relative h-48 sm:h-56 md:h-64">
+                <Image
+                  src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&q=80"
+                  alt="Organic Products"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <h3 className="text-white font-bold text-sm md:text-base lg:text-lg">Organic Products</h3>
+                </div>
+              </div>
+            </div>
+
+            {/* Engineering Products */}
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="relative h-48 sm:h-56 md:h-64">
+                <Image
+                  src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&q=80"
+                  alt="Engineering Products"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <h3 className="text-white font-bold text-sm md:text-base lg:text-lg">Engineering Products</h3>
+                </div>
+              </div>
+            </div>
+
+            {/* Plastic Products */}
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="relative h-48 sm:h-56 md:h-64">
+                <Image
+                  src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80"
+                  alt="Plastic Products"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <h3 className="text-white font-bold text-sm md:text-base lg:text-lg">Plastic Products</h3>
+                </div>
+              </div>
+            </div>
+
+            {/* Spices Products */}
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="relative h-48 sm:h-56 md:h-64">
+                <Image
+                  src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=800&q=80"
+                  alt="Spices Products"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <h3 className="text-white font-bold text-sm md:text-base lg:text-lg">Spices Products</h3>
+                </div>
+              </div>
+            </div>
+
+            {/* Textile Products */}
+            <div className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="relative h-48 sm:h-56 md:h-64">
+                <Image
+                  src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&q=80"
+                  alt="Textile Products"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <h3 className="text-white font-bold text-sm md:text-base lg:text-lg">Textile Products</h3>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -170,8 +663,7 @@ export default function Home() {
         </div>
       </section>
 
-
-      {/* Contact Form Section */}
+         {/* Contact Form Section */}
       <section className="relative py-12 sm:py-16 md:py-20 bg-gradient-to-b from-[#1a237e] via-[#283593] to-[#1a237e] overflow-hidden">
         {/* Background with stars */}
         <div className="absolute inset-0 opacity-30">
@@ -264,173 +756,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Latest Buyers Table Section */}
-      <section className="py-12 sm:py-16 md:py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#1a237e] mb-2">
-              OUR LATEST BUYER
-            </h2>
-            <div className="w-20 h-1 bg-[#00bcd4] mx-auto"></div>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-            {/* Table Controls */}
-            <div className="flex flex-col sm:flex-row justify-between items-center p-4 bg-gray-50 border-b">
-              <div className="mb-4 sm:mb-0">
-                <select className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a237e]">
-                  <option>10 records per page</option>
-                  <option>20 records per page</option>
-                  <option>50 records per page</option>
-                </select>
-              </div>
-              <div className="flex items-center gap-2">
-                <label className="text-gray-700 font-medium">Search:</label>
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1a237e]"
-                />
-              </div>
-            </div>
-
-            {/* Table */}
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-100">
-                  <tr>
-                    <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Name</th>
-                    <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Product</th>
-                    <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Quantity</th>
-                    <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">City / State</th>
-                    <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Country</th>
-                    <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Status</th>
-                    <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Action</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  <tr className="hover:bg-gray-50">
-                    <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Abdul</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">Tender Coconut</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">1 Twenty-Foot Container</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">Dubai</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">🇦🇪 UAE</td>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Verified</span>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      <button className="px-4 py-1 bg-green-500 hover:bg-green-600 text-white text-sm font-semibold rounded transition-colors">
-                        Connect
-                      </button>
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-gray-50">
-                    <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Abdul Sheikh</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">Turmeric Powder</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">20 Tonne</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">Dubai</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">🇦🇪 UAE</td>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Verified</span>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      <button className="px-4 py-1 bg-green-500 hover:bg-green-600 text-white text-sm font-semibold rounded transition-colors">
-                        Connect
-                      </button>
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-gray-50">
-                    <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Abuthar</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">Ponni Rice</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">20 metric tonne</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">Manama</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">🇧🇭 Bahrain</td>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">Deal Done</span>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      <button className="px-4 py-1 bg-green-500 hover:bg-green-600 text-white text-sm font-semibold rounded transition-colors">
-                        Connect
-                      </button>
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-gray-50">
-                    <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Mohammed</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">Green Banana</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">1 Twenty-Foot Container</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">Qatar</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">🇦🇪 UAE</td>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Verified</span>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      <button className="px-4 py-1 bg-green-500 hover:bg-green-600 text-white text-sm font-semibold rounded transition-colors">
-                        Connect
-                      </button>
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-gray-50">
-                    <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Amadi</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">Moringa Powder</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">20 Tonne</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">Addis Ababa</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">🇪🇹 Ethiopia</td>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Verified</span>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      <button className="px-4 py-1 bg-green-500 hover:bg-green-600 text-white text-sm font-semibold rounded transition-colors">
-                        Connect
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Partners Section */}
-      <section className="py-12 sm:py-16 md:py-20 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-2">
-              OUR PARTNERS
-            </h2>
-            <div className="w-20 h-1 bg-[#00bcd4] mx-auto"></div>
-            <p className="text-gray-600 mt-4">Trusted by leading global brands</p>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8">
-            {[
-              { name: "TechCorp", image: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=400&h=400&fit=crop&q=80" },
-              { name: "GlobalLogistics", image: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=400&h=400&fit=crop&q=80" },
-              { name: "TradeMaster", image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=400&fit=crop&q=80" },
-              { name: "ExpoNet", image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=400&fit=crop&q=80" },
-              { name: "CargoWorld", image: "https://images.unsplash.com/photo-1542744173-05336fcc7ad4?w=400&h=400&fit=crop&q=80" },
-              { name: "ImportPro", image: "https://images.unsplash.com/photo-1553484771-371a605b060b?w=400&h=400&fit=crop&q=80" },
-            ].map((partner, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all group"
-              >
-                <div className="relative aspect-square">
-                  <Image
-                    src={partner.image}
-                    alt={partner.name}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-300"
-                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
   
 
       {/* WhatsApp Floating Button */}
@@ -446,134 +771,7 @@ export default function Home() {
         </svg>
       </a>
 
-      {/* Footer */}
-      <footer className="bg-[#1a237e] text-white py-12 md:py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Top Section - Three Columns */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 mb-8 md:mb-12">
-            {/* About Company */}
-            <div>
-              <div className="flex items-center mb-4">
-                <span className="text-4xl font-bold text-white">EXP</span>
-                <div className="w-10 h-10 relative">
-                  <Image
-                    src="/images/globe.png"
-                    alt="Globe"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-                <span className="text-4xl font-bold text-white">RT</span>
-                <span className="text-2xl font-bold ml-2 text-white">TRADE MART</span>
-              </div>
-              <p className="text-gray-300 text-sm leading-relaxed mb-6">
-                We have been a prominent market presence for many years and are a reputed business that assists suppliers, manufacturers, and traders increase online sales
-              </p>
-              {/* Social Media Icons */}
-              <div className="flex gap-4">
-                <a href="#" className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors">
-                  <span className="text-white font-bold text-lg">f</span>
-                </a>
-                <a href="#" className="w-10 h-10 bg-cyan-500 rounded-full flex items-center justify-center hover:bg-cyan-600 transition-colors">
-                  <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
-                  </svg>
-                </a>
-                <a href="#" className="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700 transition-colors">
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                  </svg>
-                </a>
-                <a href="#" className="w-10 h-10 bg-gradient-to-tr from-purple-600 via-pink-600 to-orange-400 rounded-full flex items-center justify-center hover:opacity-90 transition-opacity">
-                  <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                  </svg>
-                </a>
-              </div>
-            </div>
-
-            {/* Useful Links */}
-            <div>
-              <h4 className="font-bold text-lg md:text-xl mb-6">Useful Links</h4>
-              <ul className="space-y-3">
-                <li>
-                  <Link href="/faq" className="text-gray-300 hover:text-[#00bcd4] transition-colors flex items-center text-sm">
-                    <span className="mr-2">&gt;</span> FAQ
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/testimonial" className="text-gray-300 hover:text-[#00bcd4] transition-colors flex items-center text-sm">
-                    <span className="mr-2">&gt;</span> Testimonial
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Contact Info */}
-            <div>
-              <h4 className="font-bold text-lg md:text-xl mb-6">Contact Info</h4>
-              <div className="space-y-6">
-                {/* Head Office */}
-                <div className="flex items-start">
-                  <svg className="w-6 h-6 text-[#00bcd4] mr-3 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                  </svg>
-                  <div>
-                    <p className="font-semibold text-[#00bcd4] mb-1">HEAD OFFICE</p>
-                    <p className="text-gray-300 text-sm leading-relaxed">
-                      Export Trade Mart, 4/803, Velachery - Tambaram Main Rd, Medavakkam, Chennai, Tamil Nadu 600100
-                    </p>
-                  </div>
-                </div>
-                {/* Phone */}
-                <div className="flex items-start">
-                  <svg className="w-6 h-6 text-[#00bcd4] mr-3 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                  </svg>
-                  <div>
-                    <p className="font-semibold text-[#00bcd4] mb-1">PHONE</p>
-                    <p className="text-gray-300 text-sm">
-                      <a href="tel:+914442874778" className="hover:text-[#00bcd4] transition-colors">(044)-4287-4778</a>
-                    </p>
-                    <p className="text-gray-300 text-sm">
-                      <a href="tel:+919650169175" className="hover:text-[#00bcd4] transition-colors">+91 965-016-9175</a>
-                    </p>
-                  </div>
-                </div>
-                {/* Email */}
-                <div className="flex items-start">
-                  <svg className="w-6 h-6 text-[#00bcd4] mr-3 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                  </svg>
-                  <div>
-                    <p className="font-semibold text-[#00bcd4] mb-1">EMAIL</p>
-                    <p className="text-gray-300 text-sm">
-                      <a href="mailto:info@exporttrademart.com" className="hover:text-[#00bcd4] transition-colors">info@exporttrademart.com</a>
-                    </p>
-                    <p className="text-gray-300 text-sm">
-                      <a href="mailto:support@exporttrademart.com" className="hover:text-[#00bcd4] transition-colors">support@exporttrademart.com</a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Copyright Bar */}
-          <div className="border-t border-gray-600 pt-6">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs md:text-sm text-gray-400">
-              <p className="text-center md:text-left">
-                © Export Trade Mart. | Powered by EXPORT TRADE MART, All Right Reserved.
-              </p>
-              <div className="flex gap-4">
-                <Link href="/terms" className="hover:text-[#00bcd4] transition-colors">Terms & Condition</Link>
-                <span>/</span>
-                <Link href="/privacy" className="hover:text-[#00bcd4] transition-colors">Privacy Policy</Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }

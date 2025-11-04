@@ -1,9 +1,10 @@
 import Header from "../components/Header";
 import Navigation from "../components/Navigation";
+import Footer from "../components/Footer";
 
 export default function About() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-white">
       <Header />
       <Navigation />
 
@@ -13,7 +14,7 @@ export default function About() {
           About Us
         </h1>
         
-        <div className="space-y-4 md:space-y-6 text-base sm:text-lg text-white-700 leading-relaxed">
+        <div className="space-y-4 md:space-y-6 text-base sm:text-lg text-gray-700 leading-relaxed">
           <p>
             Welcome to Export Trade Mart! We are a leading global trade solutions provider, passionate about 
             facilitating seamless international business operations across borders.
@@ -50,14 +51,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-[#1a237e] text-white py-8 md:py-12 mt-10 md:mt-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-xs md:text-sm text-gray-400">
-            <p>© 2024 Export Trade Mart. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }
