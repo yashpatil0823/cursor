@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import VideoPopup from "./components/VideoPopup";
 
@@ -14,6 +14,12 @@ export const metadata: Metadata = {
     shortcut: '/images/globe.png',
     apple: '/images/globe.png',
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export default function RootLayout({
