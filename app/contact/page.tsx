@@ -1,5 +1,6 @@
 import Header from "../components/Header";
 import Navigation from "../components/Navigation";
+import { contactConfig } from "../../config/contact";
 import Footer from "../components/Footer";
 
 export default function Contact() {
@@ -77,8 +78,8 @@ export default function Contact() {
             Or reach out to us through:
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
-            <a href="tel:(044)-4287-4778" className="text-[#00bcd4] hover:underline font-semibold text-sm md:text-base">
-              (044)-4287-4778
+            <a href={`tel:${contactConfig.phone.formatted}`} className="text-[#00bcd4] hover:underline font-semibold text-sm md:text-base">
+              {contactConfig.phone.display}
             </a>
             <a href="mailto:contact@exporttrademart.com" className="text-[#00bcd4] hover:underline font-semibold text-sm md:text-base">
               Email Us

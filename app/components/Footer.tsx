@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { contactConfig } from "../../config/contact";
 
 export default function Footer() {
   return (
@@ -89,10 +90,9 @@ export default function Footer() {
                 <div>
                   <p className="font-semibold text-[#00bcd4] mb-1">PHONE</p>
                   <p className="text-gray-300 text-sm">
-                    <a href="tel:+914442874778" className="hover:text-[#00bcd4] transition-colors">(044)-4287-4778</a>
-                  </p>
-                  <p className="text-gray-300 text-sm">
-                    <a href="tel:+919650169175" className="hover:text-[#00bcd4] transition-colors">+91 965-016-9175</a>
+                    <a href={`tel:${contactConfig.phone.formatted}`} className="hover:text-[#00bcd4] transition-colors">
+                      {contactConfig.phone.display}
+                    </a>
                   </p>
                 </div>
               </div>

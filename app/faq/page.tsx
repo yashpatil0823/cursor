@@ -1,6 +1,7 @@
 import Header from "../components/Header";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
+import { contactConfig } from "../../config/contact";
 
 export default function FAQ() {
   return (
@@ -29,7 +30,7 @@ export default function FAQ() {
               How can I contact your support team?
             </h2>
             <p className="text-gray-600 leading-relaxed">
-              You can reach us via phone at (044)-4287-4778 or +91 965-016-9175, email at info@exporttrademart.com or support@exporttrademart.com, or use our contact form. Our team is available to assist you 24/7.
+              You can reach us via phone at {contactConfig.phone.display}, email at {contactConfig.email.primary} or {contactConfig.email.support}, or use our contact form. Our team is available to assist you 24/7.
             </p>
           </div>
 

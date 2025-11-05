@@ -49,3 +49,35 @@ body {
   }
 }
 
+/* Slide Up Animation for Mobile Cards */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+/* Slide Down Animation for Mobile Cards (See Less) */
+@keyframes slideDown {
+  from {
+    opacity: 1;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.3s ease-in forwards;
+}
+

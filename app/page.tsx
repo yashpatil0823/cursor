@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import { useState, useEffect } from "react";
+import { contactConfig } from "../config/contact";
 
 export default function Home() {
   // Auto-playing slides
@@ -169,11 +170,49 @@ export default function Home() {
     }
   ];
 
-  const [visibleCards, setVisibleCards] = useState(3);
-  const cardsPerLoad = 3;
+  const [visibleCards, setVisibleCards] = useState(2);
+  const [isAnimatingOut, setIsAnimatingOut] = useState(false);
+  const [displayCards, setDisplayCards] = useState(2); // Cards to display (includes animating ones)
+  const cardsPerLoad = 2;
+  const initialCards = 2;
 
   const handleSeeMore = () => {
-    setVisibleCards((prev) => Math.min(prev + cardsPerLoad, buyers.length));
+    const newCount = Math.min(visibleCards + cardsPerLoad, buyers.length);
+    setVisibleCards(newCount);
+    setDisplayCards(newCount);
+    // Smooth scroll to newly added cards on mobile
+    setTimeout(() => {
+      const cardsContainer = document.querySelector('.mobile-cards-container');
+      if (cardsContainer) {
+        cardsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 100);
+  };
+
+  const handleSeeLess = () => {
+    // Only hide if there are more than initial cards
+    if (visibleCards <= initialCards) return;
+    
+    // Start fade-out animation - keep cards visible during animation
+    setIsAnimatingOut(true);
+    
+    // Calculate new count (decrease by cardsPerLoad)
+    const newCount = Math.max(initialCards, visibleCards - cardsPerLoad);
+    
+    // After animation completes (300ms), update state and scroll
+    setTimeout(() => {
+      setVisibleCards(newCount);
+      setDisplayCards(newCount);
+      // Reset animation state after a brief delay
+      setTimeout(() => {
+        setIsAnimatingOut(false);
+        // Smooth scroll back to newly visible cards on mobile
+        const cardsContainer = document.querySelector('.mobile-cards-container');
+        if (cardsContainer) {
+          cardsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }, 50);
+    }, 300); // Match animation duration
   };
 
   return (
@@ -278,12 +317,24 @@ export default function Home() {
           </div>
 
           {/* Mobile: Vertical cards (2-3 cards) */}
-          <div className="md:hidden grid grid-cols-1 gap-4 mb-6">
-            {buyers.slice(0, visibleCards).map((buyer) => (
-              <div
-                key={buyer.id}
-                className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all border border-gray-200 overflow-hidden flex-shrink-0 h-full"
-              >
+          <div className="md:hidden mobile-cards-container">
+            <div className="grid grid-cols-1 gap-4 mb-6">
+              {buyers.slice(0, displayCards).map((buyer, index) => {
+                // During animation out, only animate the last cardsPerLoad cards being removed
+                const isLastCardInBatch = index >= displayCards - cardsPerLoad;
+                const shouldAnimateOut = isAnimatingOut && isLastCardInBatch && index >= initialCards;
+                const shouldAnimateIn = !isAnimatingOut && index >= initialCards;
+                
+                return (
+                <div
+                  key={buyer.id}
+                  className={`bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden flex-shrink-0 h-full ${
+                    shouldAnimateIn ? 'animate-slideUp' : ''
+                  } ${shouldAnimateOut ? 'animate-slideDown' : ''}`}
+                  style={{
+                    animationDelay: shouldAnimateIn ? `${(index - initialCards) * 0.1}s` : '0s',
+                  }}
+                >
                 {/* Card Header */}
                 <div className="p-4 pb-3 bg-gray-50 border-b border-gray-200">
                   <div className="flex items-center">
@@ -345,16 +396,29 @@ export default function Home() {
                   </Link>
                 </div>
               </div>
-            ))}
+              );
+              })}
+            </div>
           </div>
 
-          {/* Desktop: Horizontal cards - 3 cards per row */}
+          {/* Desktop: Horizontal cards - 2 cards per row */}
           <div className="hidden md:block pb-4 mb-6">
-            <div className="grid grid-cols-3 gap-6">
-              {buyers.slice(0, visibleCards).map((buyer, index) => (
+            <div className="grid grid-cols-2 gap-8 max-w-6xl mx-auto">
+              {buyers.slice(0, displayCards).map((buyer, index) => {
+                // During animation out, only animate the last cardsPerLoad cards being removed
+                const isLastCardInBatch = index >= displayCards - cardsPerLoad;
+                const shouldAnimateOut = isAnimatingOut && isLastCardInBatch && index >= initialCards;
+                const shouldAnimateIn = !isAnimatingOut && index >= initialCards;
+                
+                return (
                 <div
                   key={buyer.id}
-                  className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden w-full h-[580px] flex flex-col animate-fadeIn"
+                  className={`bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden w-full flex flex-col ${
+                    shouldAnimateIn ? 'animate-fadeIn' : ''
+                  } ${shouldAnimateOut ? 'animate-slideDown' : ''}`}
+                  style={{
+                    animationDelay: shouldAnimateIn ? `${(index - initialCards) * 0.1}s` : '0s',
+                  }}
                 >
                   {/* Card Header */}
                   <div className="p-4 pb-3 bg-gray-50 border-b border-gray-200">
@@ -370,56 +434,65 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Card Body */}
-                  <div className="p-4 flex-1 flex flex-col">
-                    <div className="flex items-start gap-2 mb-3">
-                      <div className="text-2xl">🏳️</div>
-                      <h3 className="text-base font-bold text-blue-700 leading-tight flex-1">
-                        {buyer.title}
-                      </h3>
-                    </div>
+                  {/* Card Body - Horizontal Layout */}
+                  <div className="p-4 flex-1 flex flex-row gap-6">
+                    {/* Left Column */}
+                    <div className="flex-1 flex flex-col">
+                      <div className="flex items-start gap-2 mb-3">
+                        <div className="text-2xl">🏳️</div>
+                        <h3 className="text-base font-bold text-blue-700 leading-tight flex-1">
+                          {buyer.title}
+                        </h3>
+                      </div>
 
-                    <p className="text-sm font-semibold text-gray-800 mb-3">
-                      Buyer From {buyer.buyerFrom}
-                    </p>
+                      <p className="text-sm font-semibold text-gray-800 mb-3">
+                        Buyer From {buyer.buyerFrom}
+                      </p>
 
-                    <div className="space-y-2 mb-4 flex-1">
-                      <div className="flex items-center gap-2 text-sm text-gray-700">
-                        <svg className="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                        <span><strong>Quantity Required:</strong> {buyer.quantity}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-gray-700">
-                        <svg className="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span><strong>Destination:</strong> {buyer.destination}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-gray-700">
-                        <svg className="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span><strong>Payment Terms:</strong> {buyer.paymentTerms}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-gray-700">
-                        <svg className="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span><strong>Looking for suppliers from:</strong> {buyer.supplierOrigin}</span>
+                      <div className="mb-4">
+                        <h4 className="text-sm font-semibold text-gray-800 mb-1">Product Description</h4>
+                        <p className="text-xs text-gray-600">{buyer.description}</p>
                       </div>
                     </div>
 
-                    <div className="mb-4">
-                      <h4 className="text-sm font-semibold text-gray-800 mb-1">Product Description</h4>
-                      <p className="text-xs text-gray-600">{buyer.description}</p>
-                    </div>
+                    {/* Right Column */}
+                    <div className="flex-1 flex flex-col">
+                      <div className="flex flex-col gap-2 mb-4">
+                        <div className="flex items-center gap-2 text-sm text-gray-700">
+                          <svg className="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                          </svg>
+                          <span><strong>Quantity Required:</strong> {buyer.quantity}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-gray-700">
+                          <svg className="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          <span><strong>Destination:</strong> {buyer.destination}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-gray-700">
+                          <svg className="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          <span><strong>Payment Terms:</strong> {buyer.paymentTerms}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-gray-700">
+                          <svg className="w-4 h-4 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          <span><strong>Looking for suppliers from:</strong> {buyer.supplierOrigin}</span>
+                        </div>
+                      </div>
 
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded">Buyer Of {buyer.category}</span>
-                      <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded">{buyer.subCategory}</span>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded">Buyer Of {buyer.category}</span>
+                        <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded">{buyer.subCategory}</span>
+                      </div>
                     </div>
+                  </div>
 
+                  {/* Action Button */}
+                  <div className="p-4 pt-0">
                     <Link href="/contact" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -428,21 +501,30 @@ export default function Home() {
                     </Link>
                   </div>
                 </div>
-              ))}
+              );
+              })}
             </div>
           </div>
 
-          {/* See More Button */}
-          {visibleCards < buyers.length && (
-            <div className="text-center mt-8">
+          {/* See More / See Less Buttons */}
+          <div className="text-center mt-8 flex flex-col md:flex-row gap-4 justify-center items-center">
+            {visibleCards < buyers.length && (
               <button
                 onClick={handleSeeMore}
                 className="bg-[#00bcd4] hover:bg-[#00acc1] text-white font-semibold px-8 py-3 rounded-lg transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
               >
                 See More
               </button>
-            </div>
-          )}
+            )}
+            {visibleCards > initialCards && (
+              <button
+                onClick={handleSeeLess}
+                className="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-8 py-3 rounded-lg transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
+                See Less
+              </button>
+            )}
+          </div>
         </div>
       </section>
 
@@ -760,7 +842,7 @@ export default function Home() {
 
       {/* WhatsApp Floating Button */}
       <a
-        href="https://wa.me/91442874778"
+        href={`https://wa.me/${contactConfig.phone.whatsapp}`}
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 left-6 z-50 w-14 h-14 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all animate-bounce hover:animate-none"
