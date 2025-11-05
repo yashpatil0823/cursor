@@ -30,7 +30,8 @@ export default function Header() {
     { href: '/services', label: 'Organic Products' },
     { href: '/services', label: 'Engineering Products' },
     { href: '/services', label: 'Plastic Products' },
-    { href: '/services', label: 'Spices Products' }
+    { href: '/services', label: 'Spices Products' },
+    { href: '/services', label: 'Textile Products' }
   ];
 
   // Listen for menu state changes from Navigation (when closed from Navigation)

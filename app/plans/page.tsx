@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Header from "../components/Header";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
@@ -102,15 +103,16 @@ export default function Plans() {
                   ))}
                 </ul>
 
-                <button
-                  className={`w-full py-3 px-6 rounded-lg font-semibold transition-colors ${
+                <Link
+                  href="/contact"
+                  className={`w-full py-3 px-6 rounded-lg font-semibold transition-colors flex items-center justify-center ${
                     plan.popular
                       ? 'bg-blue-600 hover:bg-blue-700 text-white'
                       : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
                   }`}
                 >
                   Choose Plan
-                </button>
+                </Link>
               </div>
             ))}
           </div>
