@@ -193,13 +193,13 @@ export default function VideoPopup() {
                   backgroundClip: 'text',
                 }}
               >
-                EXP
+                IMPEX
               </span>
               {/* Globe Icon */}
               <div className="relative w-6 h-6 md:w-10 md:h-10 lg:w-12 lg:h-12">
                 <Image
                   src="/images/globe.png"
-                  alt="Globe"
+                  alt="IMPEX DOOR"
                   fill
                   className="object-contain"
                   style={{ filter: 'drop-shadow(0 0 10px rgba(0, 188, 212, 0.8))' }}
@@ -214,7 +214,7 @@ export default function VideoPopup() {
                   backgroundClip: 'text',
                 }}
               >
-                RT
+                DOOR
               </span>
             </div>
             <div 
@@ -223,7 +223,7 @@ export default function VideoPopup() {
                 color: '#00bcd4',
               }}
             >
-              TRADE MART
+              LLP
             </div>
             
             {/* Typing Animation Text Box */}
