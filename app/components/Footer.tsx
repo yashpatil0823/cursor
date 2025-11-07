@@ -10,18 +10,18 @@ export default function Footer() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 mb-8 md:mb-12">
           {/* About Company */}
           <div>
-            <div className="flex items-center mb-4">
-              <span className="text-4xl font-bold text-white">EXP</span>
-              <div className="w-10 h-10 relative">
+            <div className="flex items-center mb-4 flex-wrap">
+              <span className="text-3xl md:text-4xl font-bold text-white">IMPEX</span>
+              <div className="w-8 h-8 md:w-10 md:h-10 relative mx-1">
                 <Image
                   src="/images/globe.png"
-                  alt="Globe"
+                  alt="IMPEX DOOR"
                   fill
                   className="object-contain"
                 />
               </div>
-              <span className="text-4xl font-bold text-white">RT</span>
-              <span className="text-2xl font-bold ml-2 text-white">TRADE MART</span>
+              <span className="text-3xl md:text-4xl font-bold text-white">DOOR</span>
+              <span className="text-xl md:text-2xl font-bold ml-2 text-[#00bcd4]">LLP</span>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed mb-6">
               We have been a prominent market presence for many years and are a reputed business that assists suppliers, manufacturers, and traders increase online sales
@@ -78,7 +78,7 @@ export default function Footer() {
                 <div>
                   <p className="font-semibold text-[#00bcd4] mb-1">HEAD OFFICE</p>
                   <p className="text-gray-300 text-sm leading-relaxed">
-                    Export Trade Mart, 4/803, Velachery - Tambaram Main Rd, Medavakkam, Chennai, Tamil Nadu 600100
+                    {contactConfig.address.street}, {contactConfig.address.city}, {contactConfig.address.state} {contactConfig.address.zip}, {contactConfig.address.country}
                   </p>
                 </div>
               </div>
@@ -104,10 +104,10 @@ export default function Footer() {
                 <div>
                   <p className="font-semibold text-[#00bcd4] mb-1">EMAIL</p>
                   <p className="text-gray-300 text-sm">
-                    <a href="mailto:info@exporttrademart.com" className="hover:text-[#00bcd4] transition-colors">info@exporttrademart.com</a>
+                    <a href={`mailto:${contactConfig.email.primary}`} className="hover:text-[#00bcd4] transition-colors">{contactConfig.email.primary}</a>
                   </p>
                   <p className="text-gray-300 text-sm">
-                    <a href="mailto:support@exporttrademart.com" className="hover:text-[#00bcd4] transition-colors">support@exporttrademart.com</a>
+                    <a href={`mailto:${contactConfig.email.support}`} className="hover:text-[#00bcd4] transition-colors">{contactConfig.email.support}</a>
                   </p>
                 </div>
               </div>
@@ -119,7 +119,7 @@ export default function Footer() {
         <div className="border-t border-gray-600 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs md:text-sm text-gray-400">
             <p className="text-center md:text-left">
-              © Export Trade Mart. | Powered by EXPORT TRADE MART, All Right Reserved.
+              © IMPEX DOOR LLP. | Powered by IMPEX DOOR LLP, All Right Reserved.
             </p>
             <div className="flex gap-4">
               <Link href="/terms" className="hover:text-[#00bcd4] transition-colors">Terms & Condition</Link>

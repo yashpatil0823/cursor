@@ -3,8 +3,8 @@ import "./globals.css";
 import VideoPopup from "./components/VideoPopup";
 
 export const metadata: Metadata = {
-  title: "Export Trade Mart | Global Trade Solutions",
-  description: "Connecting businesses worldwide through excellence in export & import. Your trusted global trade partner.",
+  title: "IMPEX DOOR LLP | Global Trade Solutions",
+      description: "Connecting businesses worldwide through excellence in export & import. Your trusted global trade partner.",
   icons: {
     icon: [
       { url: '/images/globe.png', type: 'image/png' },

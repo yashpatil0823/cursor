@@ -19,7 +19,7 @@ export default function Terms() {
               1. Acceptance of Terms
             </h2>
             <p className="leading-relaxed">
-              By accessing and using Export Trade Mart's website and services, you accept and agree to be bound by the terms and provision of this agreement.
+              By accessing and using IMPEX DOOR LLP's website and services, you accept and agree to be bound by the terms and provision of this agreement.
             </p>
           </div>
 
@@ -28,10 +28,10 @@ export default function Terms() {
               2. Use License
             </h2>
             <p className="leading-relaxed mb-3">
-              Permission is granted to temporarily access the materials on Export Trade Mart's website for personal, non-commercial transitory viewing only.
+              Permission is granted to temporarily access the materials on IMPEX DOOR LLP's website for personal, non-commercial transitory viewing only.
             </p>
             <p className="leading-relaxed">
-              This license shall automatically terminate if you violate any of these restrictions and may be terminated by Export Trade Mart at any time.
+              This license shall automatically terminate if you violate any of these restrictions and may be terminated by IMPEX DOOR LLP at any time.
             </p>
           </div>
 
@@ -40,7 +40,7 @@ export default function Terms() {
               3. Disclaimer
             </h2>
             <p className="leading-relaxed">
-              The materials on Export Trade Mart's website are provided on an 'as is' basis. Export Trade Mart makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
+              The materials on IMPEX DOOR LLP's website are provided on an 'as is' basis. IMPEX DOOR LLP makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
             </p>
           </div>
 
@@ -49,7 +49,7 @@ export default function Terms() {
               4. Limitations
             </h2>
             <p className="leading-relaxed">
-              In no event shall Export Trade Mart or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on Export Trade Mart's website.
+              In no event shall IMPEX DOOR LLP or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on IMPEX DOOR LLP's website.
             </p>
           </div>
 
@@ -58,7 +58,7 @@ export default function Terms() {
               5. Revisions and Errata
             </h2>
             <p className="leading-relaxed">
-              The materials appearing on Export Trade Mart's website could include technical, typographical, or photographic errors. Export Trade Mart does not warrant that any of the materials on its website are accurate, complete, or current.
+              The materials appearing on IMPEX DOOR LLP's website could include technical, typographical, or photographic errors. IMPEX DOOR LLP does not warrant that any of the materials on its website are accurate, complete, or current.
             </p>
           </div>
 
@@ -67,7 +67,7 @@ export default function Terms() {
               6. Contact Information
             </h2>
             <p className="leading-relaxed">
-              If you have any questions about these Terms & Conditions, please contact us through our contact page or email us at info@exporttrademart.com.
+              If you have any questions about these Terms & Conditions, please contact us through our contact page or email us at info@impexdoor.com.
             </p>
           </div>
         </div>

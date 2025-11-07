@@ -26,7 +26,7 @@ export default function Testimonial() {
               </div>
             </div>
             <p className="text-gray-700 leading-relaxed italic">
-              &quot;Export Trade Mart has been instrumental in expanding our business across borders. Their professional team ensured our turmeric powder shipments reached Dubai on time. Highly recommended for anyone looking to export to the Middle East!&quot;
+              &quot;IMPEX DOOR LLP has been instrumental in expanding our business across borders. Their professional team ensured our turmeric powder shipments reached Dubai on time. Highly recommended for anyone looking to export to the Middle East!&quot;
             </p>
             <div className="mt-4 flex text-yellow-400">
               {[...Array(5)].map((_, i) => (
@@ -48,7 +48,7 @@ export default function Testimonial() {
               </div>
             </div>
             <p className="text-gray-700 leading-relaxed italic">
-              &quot;Working with Export Trade Mart for our Moringa Powder export has been a game-changer. Their expertise in documentation and logistics saved us valuable time and resources. Excellent service from start to finish!&quot;
+              &quot;Working with IMPEX DOOR LLP for our Moringa Powder export has been a game-changer. Their expertise in documentation and logistics saved us valuable time and resources. Excellent service from start to finish!&quot;
             </p>
             <div className="mt-4 flex text-yellow-400">
               {[...Array(5)].map((_, i) => (
@@ -70,7 +70,7 @@ export default function Testimonial() {
               </div>
             </div>
             <p className="text-gray-700 leading-relaxed italic">
-              &quot;The Ponni Rice deal through Export Trade Mart was completed successfully. Their transparent process and reliable communication kept us informed at every step. We&apos;re definitely coming back for more business!&quot;
+              &quot;The Ponni Rice deal through IMPEX DOOR LLP was completed successfully. Their transparent process and reliable communication kept us informed at every step. We&apos;re definitely coming back for more business!&quot;
             </p>
             <div className="mt-4 flex text-yellow-400">
               {[...Array(5)].map((_, i) => (
@@ -92,7 +92,7 @@ export default function Testimonial() {
               </div>
             </div>
             <p className="text-gray-700 leading-relaxed italic">
-              &quot;Export Trade Mart&apos;s global network really impressed us. They connected us with the right buyers for our Green Banana exports. Their team is knowledgeable and always ready to help. Outstanding service!&quot;
+              &quot;IMPEX DOOR LLP&apos;s global network really impressed us. They connected us with the right buyers for our Green Banana exports. Their team is knowledgeable and always ready to help. Outstanding service!&quot;
             </p>
             <div className="mt-4 flex text-yellow-400">
               {[...Array(5)].map((_, i) => (

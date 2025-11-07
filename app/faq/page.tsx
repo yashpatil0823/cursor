@@ -18,7 +18,7 @@ export default function FAQ() {
         <div className="space-y-6 md:space-y-8">
           <div className="bg-white rounded-lg shadow-lg p-6">
             <h2 className="text-xl md:text-2xl font-bold mb-3 text-gray-800">
-              What services does Export Trade Mart provide?
+              What services does IMPEX DOOR LLP provide?
             </h2>
             <p className="text-gray-600 leading-relaxed">
               We provide comprehensive export and import solutions including trade facilitation, documentation, logistics coordination, and market connection services. We help suppliers, manufacturers, and traders expand their business globally.
@@ -39,7 +39,7 @@ export default function FAQ() {
               Where is your head office located?
             </h2>
             <p className="text-gray-600 leading-relaxed">
-              Our head office is located at: Export Trade Mart, 4/803, Velachery - Tambaram Main Rd, Medavakkam, Chennai, Tamil Nadu 600100, India.
+              Our head office is located at: IMPEX DOOR LLP, 4/803, Velachery - Tambaram Main Rd, Medavakkam, Chennai, Tamil Nadu 600100, India.
             </p>
           </div>
 

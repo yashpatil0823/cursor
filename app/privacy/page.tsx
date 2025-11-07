@@ -101,7 +101,7 @@ export default function Privacy() {
               8. Contact Us
             </h2>
             <p className="leading-relaxed">
-              If you have any questions about this Privacy Policy, please contact us through our contact page or email us at info@exporttrademart.com.
+              If you have any questions about this Privacy Policy, please contact us through our contact page or email us at info@impexdoor.com.
             </p>
           </div>
         </div>

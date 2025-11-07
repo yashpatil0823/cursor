@@ -710,7 +710,7 @@ export default function Home() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 md:mb-12 lg:mb-16">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-3 md:mb-4">
-              Why Choose Export Trade Mart ? 
+              Why Choose IMPEX DOOR LLP ? 
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-2">
               We specialize in facilitating seamless international trade operations with expertise, reliability, and global reach.

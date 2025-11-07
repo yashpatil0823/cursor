@@ -87,20 +87,20 @@ export default function Header() {
             {/* Logo - Extreme Left */}
             <Link href="/" className="flex items-center gap-1 md:gap-2 flex-shrink-0">
               <div className="flex items-baseline">
-                <span className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900">EXP</span>
-                {/* Globe Icon replacing O */}
-                <div className="relative w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 inline-block">
+                <span className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900">IMPEX</span>
+                {/* Door/Globe Icon */}
+                <div className="relative w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 inline-block mx-1">
                   <Image
                     src="/images/globe.png"
-                    alt="Globe"
+                    alt="IMPEX DOOR"
                     fill
                     className="object-contain"
                   />
                 </div>
-                <span className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900">RT</span>
+                <span className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900">DOOR</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-xs md:text-sm font-bold text-[#00bcd4] leading-tight">TRADE MART</span>
+                <span className="text-xs md:text-sm font-bold text-[#00bcd4] leading-tight">LLP</span>
               </div>
             </Link>
 
